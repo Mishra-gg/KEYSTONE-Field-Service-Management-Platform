@@ -1,0 +1,32 @@
+# Maven
+backend/target/
+
+# Eclipse / STS
+.classpath
+.project
+.settings/
+
+# IntelliJ
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Java
+*.class
+
+# Logs
+*.log
+
+# Local environment / secrets
+.env
+.env.*
+!.env.example
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local Spring configuration
+application-local.properties

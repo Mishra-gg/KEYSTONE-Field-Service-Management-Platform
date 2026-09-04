@@ -9,10 +9,15 @@ import lombok.*;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // for JPA
 @Entity
 @Table(name="users")
+//For application code
 public class User {
+	public User(String name2, String email2, String hashedPassword, Role role2, boolean b, LocalDateTime now,
+			LocalDateTime now2) {
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

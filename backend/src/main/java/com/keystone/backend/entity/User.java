@@ -14,8 +14,22 @@ import lombok.*;
 @Table(name="users")
 //For application code
 public class User {
-	public User(String name2, String email2, String hashedPassword, Role role2, boolean b, LocalDateTime now,
-			LocalDateTime now2) {
+	public User(
+	        String name,
+	        String email,
+	        String passwordHash,
+	        Role role,
+	        boolean active,
+	        LocalDateTime createdAt,
+	        LocalDateTime updatedAt) {
+
+	    this.name = name;
+	    this.email = email;
+	    this.passwordHash = passwordHash;
+	    this.role = role;
+	    this.active = active;
+	    this.createdAt = createdAt;
+	    this.updatedAt = updatedAt;
 	}
 
 	@Id

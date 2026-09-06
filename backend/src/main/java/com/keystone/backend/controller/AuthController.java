@@ -18,12 +18,13 @@ public class AuthController {
         this.authService = authService;
     }
 
+   
     @PostMapping("/login")
     public ResponseEntity<String> login(
             @Valid @RequestBody LoginRequest request) {
 
-        authService.login(request);
+        String token = authService.login(request);
 
-        return ResponseEntity.ok("Login successful");
+        return ResponseEntity.ok(token);
     }
 }

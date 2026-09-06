@@ -10,6 +10,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.keystone.backend.security.JwtAuthenticationFilter;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 
@@ -17,9 +21,14 @@ import org.springframework.security.config.annotation.authentication.configurati
 public class SecurityConfig {
 	
 	private final UserDetailsService userDetailsService;
+	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-	public SecurityConfig(UserDetailsService userDetailsService) {
+	public SecurityConfig(
+	        UserDetailsService userDetailsService,
+	        JwtAuthenticationFilter jwtAuthenticationFilter) {
+
 	    this.userDetailsService = userDetailsService;
+	    this.jwtAuthenticationFilter = jwtAuthenticationFilter;
 	}
 	
 	@Bean
@@ -36,12 +45,16 @@ public class SecurityConfig {
 	            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 	        )
 	        .authorizeHttpRequests(auth -> auth
-	        	    .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-	        	    .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-	        	    .requestMatchers("/actuator/health").permitAll()
-	        	    .anyRequest().authenticated()
-	        	)
-	        .userDetailsService(userDetailsService);
+	            .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+	            .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+	            .requestMatchers("/actuator/health").permitAll()
+	            .anyRequest().authenticated()
+	        )
+	        .userDetailsService(userDetailsService)
+	        .addFilterBefore(
+	            jwtAuthenticationFilter,
+	            UsernamePasswordAuthenticationFilter.class
+	        );
 
 	    return http.build();
 	}

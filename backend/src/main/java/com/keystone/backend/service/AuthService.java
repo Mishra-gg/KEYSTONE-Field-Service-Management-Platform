@@ -10,12 +10,17 @@ import com.keystone.backend.dto.LoginRequest;
 public class AuthService {
 
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
-    public AuthService(AuthenticationManager authenticationManager) {
+    public AuthService(
+            AuthenticationManager authenticationManager,
+            JwtService jwtService) {
+
         this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
 
-    public void login(LoginRequest request) {
+    public String login(LoginRequest request) {
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(
@@ -24,5 +29,7 @@ public class AuthService {
                 );
 
         authenticationManager.authenticate(authenticationToken);
+
+        return jwtService.generateToken(request.getEmail());
     }
 }

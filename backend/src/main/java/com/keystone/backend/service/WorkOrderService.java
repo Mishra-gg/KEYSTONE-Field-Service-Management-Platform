@@ -6,9 +6,10 @@ import org.springframework.stereotype.Service;
 import com.keystone.backend.dto.WorkOrderAssignmentRequest;
 import com.keystone.backend.dto.WorkOrderRequest;
 import com.keystone.backend.dto.WorkOrderResponse;
+import com.keystone.backend.dto.WorkOrderStatusUpdateRequest;
 import com.keystone.backend.entity.User;
 import com.keystone.backend.entity.WorkOrder;
-import com.keystone.backend.enums.Role;
+import com.keystone.backend.enums.*;
 import com.keystone.backend.enums.WorkOrderStatus;
 import com.keystone.backend.repository.UserRepository;
 import com.keystone.backend.repository.WorkOrderRepository;
@@ -109,6 +110,52 @@ public class WorkOrderService {
 
         workOrder.setTechnician(technician);
         workOrder.setStatus(WorkOrderStatus.ASSIGNED);
+        workOrder.setUpdatedAt(LocalDateTime.now());
+
+        WorkOrder saved = workOrderRepository.save(workOrder);
+
+        return toResponse(saved);
+    }
+    
+    public WorkOrderResponse updateStatus(
+            Long id,
+            WorkOrderStatus newStatus) {
+
+        WorkOrder workOrder = workOrderRepository.findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Work order not found"));
+
+        WorkOrderStatus currentStatus = workOrder.getStatus();
+
+        boolean valid = switch (currentStatus) {
+
+            case NEW ->
+                    newStatus == WorkOrderStatus.ASSIGNED;
+
+            case ASSIGNED ->
+                    newStatus == WorkOrderStatus.IN_PROGRESS;
+
+            case IN_PROGRESS ->
+                    newStatus == WorkOrderStatus.ON_HOLD
+                    || newStatus == WorkOrderStatus.COMPLETED;
+
+            case ON_HOLD ->
+                    newStatus == WorkOrderStatus.IN_PROGRESS;
+
+            case COMPLETED ->
+                    newStatus == WorkOrderStatus.CLOSED;
+
+            case CLOSED, CANCELLED ->
+                    false;
+        };
+
+        if (!valid) {
+            throw new IllegalArgumentException(
+                    "Invalid status transition from "
+                    + currentStatus + " to " + newStatus);
+        }
+
+        workOrder.setStatus(newStatus);
         workOrder.setUpdatedAt(LocalDateTime.now());
 
         WorkOrder saved = workOrderRepository.save(workOrder);

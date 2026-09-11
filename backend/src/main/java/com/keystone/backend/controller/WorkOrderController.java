@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.keystone.backend.dto.WorkOrderAssignmentRequest;
 import com.keystone.backend.dto.WorkOrderRequest;
 import com.keystone.backend.dto.WorkOrderResponse;
+import com.keystone.backend.dto.WorkOrderStatusUpdateRequest;
 import com.keystone.backend.service.WorkOrderService;
 
 import jakarta.validation.Valid;
@@ -49,6 +50,15 @@ public class WorkOrderController {
 
         return ResponseEntity.ok(
                 workOrderService.assignTechnician(id, request)
+        );
+    }
+    @PutMapping("/{id}/status")
+    public ResponseEntity<WorkOrderResponse> updateStatus(
+            @PathVariable Long id,
+            @Valid @RequestBody WorkOrderStatusUpdateRequest request) {
+
+        return ResponseEntity.ok(
+                workOrderService.updateStatus(id, request.getStatus())
         );
     }
     

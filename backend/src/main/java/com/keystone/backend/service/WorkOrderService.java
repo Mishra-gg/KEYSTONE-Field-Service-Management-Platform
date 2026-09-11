@@ -1,17 +1,22 @@
 package com.keystone.backend.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.keystone.backend.dto.WorkOrderAssignmentRequest;
 import com.keystone.backend.dto.WorkOrderRequest;
 import com.keystone.backend.dto.WorkOrderResponse;
-import com.keystone.backend.dto.WorkOrderStatusUpdateRequest;
 import com.keystone.backend.entity.User;
 import com.keystone.backend.entity.WorkOrder;
-import com.keystone.backend.enums.*;
+import com.keystone.backend.entity.WorkOrderHistory;
+import com.keystone.backend.enums.Role;
 import com.keystone.backend.enums.WorkOrderStatus;
 import com.keystone.backend.repository.UserRepository;
+import com.keystone.backend.repository.WorkOrderHistoryRepository;
 import com.keystone.backend.repository.WorkOrderRepository;
 
 @Service
@@ -19,13 +24,16 @@ public class WorkOrderService {
 
     private final WorkOrderRepository workOrderRepository;
     private final UserRepository userRepository;
+    private final WorkOrderHistoryRepository workOrderHistoryRepository;
 
     public WorkOrderService(
             WorkOrderRepository workOrderRepository,
-            UserRepository userRepository) {
+            UserRepository userRepository,
+            WorkOrderHistoryRepository workOrderHistoryRepository) {
 
         this.workOrderRepository = workOrderRepository;
         this.userRepository = userRepository;
+        this.workOrderHistoryRepository = workOrderHistoryRepository;
     }
 
     public WorkOrderResponse createWorkOrder(WorkOrderRequest request) {
@@ -55,7 +63,8 @@ public class WorkOrderService {
 
         return toResponse(saved);
     }
-    public java.util.List<WorkOrderResponse> getAllWorkOrders() {
+
+    public List<WorkOrderResponse> getAllWorkOrders() {
 
         return workOrderRepository.findAll()
                 .stream()
@@ -86,6 +95,8 @@ public class WorkOrderService {
 
         return response;
     }
+
+    @Transactional
     public WorkOrderResponse assignTechnician(
             Long workOrderId,
             WorkOrderAssignmentRequest request) {
@@ -108,15 +119,24 @@ public class WorkOrderService {
                     "Only NEW work orders can be assigned");
         }
 
+        WorkOrderStatus oldStatus = workOrder.getStatus();
+
         workOrder.setTechnician(technician);
         workOrder.setStatus(WorkOrderStatus.ASSIGNED);
         workOrder.setUpdatedAt(LocalDateTime.now());
 
         WorkOrder saved = workOrderRepository.save(workOrder);
 
+        saveHistory(
+                saved,
+                oldStatus,
+                WorkOrderStatus.ASSIGNED
+        );
+
         return toResponse(saved);
     }
-    
+
+    @Transactional
     public WorkOrderResponse updateStatus(
             Long id,
             WorkOrderStatus newStatus) {
@@ -160,6 +180,37 @@ public class WorkOrderService {
 
         WorkOrder saved = workOrderRepository.save(workOrder);
 
+        saveHistory(
+                saved,
+                currentStatus,
+                newStatus
+        );
+
         return toResponse(saved);
+    }
+
+    private void saveHistory(
+            WorkOrder workOrder,
+            WorkOrderStatus oldStatus,
+            WorkOrderStatus newStatus) {
+
+        String email = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+
+        User changedBy = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("User not found"));
+
+        WorkOrderHistory history = new WorkOrderHistory();
+
+        history.setWorkOrder(workOrder);
+        history.setOldStatus(oldStatus);
+        history.setNewStatus(newStatus);
+        history.setChangedBy(changedBy);
+        history.setChangedAt(LocalDateTime.now());
+
+        workOrderHistoryRepository.save(history);
     }
 }

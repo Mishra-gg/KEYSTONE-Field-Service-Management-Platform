@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.keystone.backend.dto.WorkOrderAssignmentRequest;
@@ -43,6 +44,7 @@ public class WorkOrderController {
         );
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN', 'DISPATCHER')")
     @PutMapping("/{id}/assign")
     public ResponseEntity<WorkOrderResponse> assignTechnician(
             @PathVariable Long id,
@@ -52,6 +54,8 @@ public class WorkOrderController {
                 workOrderService.assignTechnician(id, request)
         );
     }
+    
+    @PreAuthorize("hasAnyRole('ADMIN', 'DISPATCHER', 'TECHNICIAN')")
     @PutMapping("/{id}/status")
     public ResponseEntity<WorkOrderResponse> updateStatus(
             @PathVariable Long id,
@@ -60,6 +64,5 @@ public class WorkOrderController {
         return ResponseEntity.ok(
                 workOrderService.updateStatus(id, request.getStatus())
         );
-    }
-    
+    }    
 }

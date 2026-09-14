@@ -3,11 +3,15 @@ package com.keystone.backend.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.keystone.backend.dto.WorkOrderAssignmentRequest;
+import com.keystone.backend.dto.WorkOrderHistoryResponse;
 import com.keystone.backend.dto.WorkOrderRequest;
 import com.keystone.backend.dto.WorkOrderResponse;
 import com.keystone.backend.entity.User;
@@ -64,36 +68,74 @@ public class WorkOrderService {
         return toResponse(saved);
     }
 
-    public List<WorkOrderResponse> getAllWorkOrders() {
+    public Page<WorkOrderResponse> getAllWorkOrders(
+            WorkOrderStatus status,
+            String priority,
+            Pageable pageable) {
 
-        return workOrderRepository.findAll()
-                .stream()
-                .map(this::toResponse)
-                .toList();
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        User currentUser = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("User not found"));
+
+        Role role = currentUser.getRole();
+
+        // CUSTOMER can see only their own work orders
+        if (role == Role.CUSTOMER) {
+
+            return workOrderRepository
+                    .findByCustomerId(currentUser.getId(), pageable)
+                    .map(this::toResponse);
+        }
+
+        // TECHNICIAN can see only work orders assigned to them
+        if (role == Role.TECHNICIAN) {
+
+            return workOrderRepository
+                    .findByTechnicianId(currentUser.getId(), pageable)
+                    .map(this::toResponse);
+        }
+
+        // ADMIN and DISPATCHER can see all work orders
+        return getFilteredWorkOrders(status, priority, pageable);
     }
 
-    private WorkOrderResponse toResponse(WorkOrder workOrder) {
+    private Page<WorkOrderResponse> getFilteredWorkOrders(
+            WorkOrderStatus status,
+            String priority,
+            Pageable pageable) {
 
-        WorkOrderResponse response = new WorkOrderResponse();
+        if (status != null && priority != null) {
 
-        response.setId(workOrder.getId());
-        response.setTitle(workOrder.getTitle());
-        response.setDescription(workOrder.getDescription());
-        response.setPriority(workOrder.getPriority());
-        response.setStatus(workOrder.getStatus());
+            return workOrderRepository
+                    .findByStatusAndPriority(
+                            status,
+                            priority,
+                            pageable)
+                    .map(this::toResponse);
+        }
 
-        response.setCustomerId(
-                workOrder.getCustomer().getId());
+        if (status != null) {
 
-        response.setTechnicianId(
-                workOrder.getTechnician() != null
-                        ? workOrder.getTechnician().getId()
-                        : null);
+            return workOrderRepository
+                    .findByStatus(status, pageable)
+                    .map(this::toResponse);
+        }
 
-        response.setCreatedAt(workOrder.getCreatedAt());
-        response.setUpdatedAt(workOrder.getUpdatedAt());
+        if (priority != null) {
 
-        return response;
+            return workOrderRepository
+                    .findByPriority(priority, pageable)
+                    .map(this::toResponse);
+        }
+
+        return workOrderRepository
+                .findAll(pageable)
+                .map(this::toResponse);
     }
 
     @Transactional
@@ -103,11 +145,13 @@ public class WorkOrderService {
 
         WorkOrder workOrder = workOrderRepository.findById(workOrderId)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("Work order not found"));
+                        new IllegalArgumentException(
+                                "Work order not found"));
 
         User technician = userRepository.findById(request.getTechnicianId())
                 .orElseThrow(() ->
-                        new IllegalArgumentException("Technician not found"));
+                        new IllegalArgumentException(
+                                "Technician not found"));
 
         if (technician.getRole() != Role.TECHNICIAN) {
             throw new IllegalArgumentException(
@@ -143,7 +187,8 @@ public class WorkOrderService {
 
         WorkOrder workOrder = workOrderRepository.findById(id)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("Work order not found"));
+                        new IllegalArgumentException(
+                                "Work order not found"));
 
         WorkOrderStatus currentStatus = workOrder.getStatus();
 
@@ -172,7 +217,9 @@ public class WorkOrderService {
         if (!valid) {
             throw new IllegalArgumentException(
                     "Invalid status transition from "
-                    + currentStatus + " to " + newStatus);
+                    + currentStatus
+                    + " to "
+                    + newStatus);
         }
 
         workOrder.setStatus(newStatus);
@@ -201,7 +248,8 @@ public class WorkOrderService {
 
         User changedBy = userRepository.findByEmail(email)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("User not found"));
+                        new IllegalArgumentException(
+                                "User not found"));
 
         WorkOrderHistory history = new WorkOrderHistory();
 
@@ -212,5 +260,70 @@ public class WorkOrderService {
         history.setChangedAt(LocalDateTime.now());
 
         workOrderHistoryRepository.save(history);
+    }
+
+    public List<WorkOrderHistoryResponse> getWorkOrderHistory(
+            Long workOrderId) {
+
+        if (!workOrderRepository.existsById(workOrderId)) {
+            throw new IllegalArgumentException(
+                    "Work order not found");
+        }
+
+        return workOrderHistoryRepository
+                .findByWorkOrderIdOrderByChangedAtAsc(workOrderId)
+                .stream()
+                .map(this::toHistoryResponse)
+                .toList();
+    }
+
+    private WorkOrderHistoryResponse toHistoryResponse(
+            WorkOrderHistory history) {
+
+        WorkOrderHistoryResponse response =
+                new WorkOrderHistoryResponse();
+
+        response.setId(history.getId());
+        response.setWorkOrderId(
+                history.getWorkOrder().getId());
+        response.setOldStatus(
+                history.getOldStatus());
+        response.setNewStatus(
+                history.getNewStatus());
+        response.setChangedBy(
+                history.getChangedBy().getId());
+        response.setChangedAt(
+                history.getChangedAt());
+
+        return response;
+    }
+
+    private WorkOrderResponse toResponse(
+            WorkOrder workOrder) {
+
+        WorkOrderResponse response =
+                new WorkOrderResponse();
+
+        response.setId(workOrder.getId());
+        response.setTitle(workOrder.getTitle());
+        response.setDescription(workOrder.getDescription());
+        response.setPriority(workOrder.getPriority());
+        response.setStatus(workOrder.getStatus());
+
+        response.setCustomerId(
+                workOrder.getCustomer().getId());
+
+        response.setTechnicianId(
+                workOrder.getTechnician() != null
+                        ? workOrder.getTechnician().getId()
+                        : null);
+
+        response.setCreatedAt(
+                workOrder.getCreatedAt());
+
+        response.setUpdatedAt(
+                workOrder.getUpdatedAt());
+
+        return response;
     }
 }

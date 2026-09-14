@@ -2,15 +2,19 @@ package com.keystone.backend.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.keystone.backend.dto.WorkOrderAssignmentRequest;
+import com.keystone.backend.dto.WorkOrderHistoryResponse;
 import com.keystone.backend.dto.WorkOrderRequest;
 import com.keystone.backend.dto.WorkOrderResponse;
 import com.keystone.backend.dto.WorkOrderStatusUpdateRequest;
+import com.keystone.backend.enums.WorkOrderStatus;
 import com.keystone.backend.service.WorkOrderService;
 
 import jakarta.validation.Valid;
@@ -36,11 +40,19 @@ public class WorkOrderController {
                 .status(HttpStatus.CREATED)
                 .body(response);
     }
+    
     @GetMapping
-    public ResponseEntity<List<WorkOrderResponse>> getAllWorkOrders() {
+    public ResponseEntity<Page<WorkOrderResponse>> getAllWorkOrders(
+            @RequestParam(required = false) WorkOrderStatus status,
+            @RequestParam(required = false) String priority,
+            Pageable pageable) {
 
         return ResponseEntity.ok(
-                workOrderService.getAllWorkOrders()
+                workOrderService.getAllWorkOrders(
+                        status,
+                        priority,
+                        pageable
+                )
         );
     }
     
@@ -64,5 +76,13 @@ public class WorkOrderController {
         return ResponseEntity.ok(
                 workOrderService.updateStatus(id, request.getStatus())
         );
-    }    
+    }   
+    @GetMapping("/{id}/history")
+    public ResponseEntity<List<WorkOrderHistoryResponse>> getWorkOrderHistory(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                workOrderService.getWorkOrderHistory(id)
+        );
+    }
 }

@@ -1,0 +1,302 @@
+.technicians-layout {
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.technicians-main {
+  margin-left: 250px;
+  padding: 30px 35px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.technicians-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.technicians-header h1 {
+  margin: 0;
+  color: #172033;
+  font-size: 30px;
+}
+
+.technicians-header p {
+  margin: 6px 0 0;
+  color: #667085;
+  font-size: 14px;
+}
+
+
+/* =========================
+   ADD BUTTON
+========================= */
+
+.add-technician-btn {
+  border: none;
+  background: #2563eb;
+  color: white;
+  padding: 11px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.add-technician-btn:hover {
+  background: #1d4ed8;
+}
+
+
+/* =========================
+   TOOLBAR
+========================= */
+
+.technicians-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.technician-search {
+  width: 320px;
+  padding: 11px 13px;
+  border: 1px solid #d0d5dd;
+  border-radius: 7px;
+  outline: none;
+  font-size: 14px;
+  background: white;
+}
+
+.technician-search:focus {
+  border-color: #2563eb;
+}
+
+.technician-status-filter {
+  padding: 11px 13px;
+  border: 1px solid #d0d5dd;
+  border-radius: 7px;
+  outline: none;
+  font-size: 14px;
+  background: white;
+}
+
+.technician-count {
+  margin-left: auto;
+  color: #667085;
+  font-size: 14px;
+}
+
+
+/* =========================
+   TABLE CARD
+========================= */
+
+.technicians-table-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+
+.technicians-table-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.technicians-table-card th {
+  background: #f8fafc;
+  color: #667085;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  padding: 14px 16px;
+  border-bottom: 1px solid #eaecf0;
+}
+
+.technicians-table-card td {
+  padding: 16px;
+  color: #344054;
+  font-size: 13px;
+  border-bottom: 1px solid #eaecf0;
+}
+
+.technicians-table-card tbody tr:hover {
+  background: #f8fafc;
+}
+
+
+/* =========================
+   TECHNICIAN NAME
+========================= */
+
+.technician-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.technician-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #eff6ff;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.technician-name-cell div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.technician-name-cell strong {
+  color: #172033;
+  font-size: 14px;
+}
+
+.technician-name-cell span {
+  color: #98a2b3;
+  font-size: 11px;
+}
+
+
+/* =========================
+   SKILLS
+========================= */
+
+.technician-skills {
+  color: #475467;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.technician-status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.technician-status.available {
+  background: #ecfdf3;
+  color: #16a34a;
+}
+
+.technician-status.busy {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.technician-status.off-duty {
+  background: #f2f4f7;
+  color: #667085;
+}
+
+
+/* =========================
+   ASSIGNED JOBS
+========================= */
+
+.assigned-jobs-badge {
+  display: inline-flex;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  align-items: center;
+  justify-content: center;
+  background: #eff6ff;
+  color: #2563eb;
+  border-radius: 7px;
+  font-weight: 600;
+}
+
+
+/* =========================
+   VIEW BUTTON
+========================= */
+
+.view-technician-btn {
+  border: 1px solid #d0d5dd;
+  background: white;
+  color: #2563eb;
+  padding: 7px 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.view-technician-btn:hover {
+  background: #eff6ff;
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.no-technicians {
+  text-align: center;
+  padding: 50px 20px;
+  color: #667085;
+}
+
+.no-technicians div {
+  font-size: 35px;
+}
+
+.no-technicians h3 {
+  color: #344054;
+  margin: 10px 0 5px;
+}
+
+.no-technicians p {
+  margin: 0;
+  font-size: 13px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+  .technicians-main {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .technicians-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .technicians-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .technician-search {
+    width: 100%;
+  }
+
+  .technician-count {
+    margin-left: 0;
+  }
+
+}

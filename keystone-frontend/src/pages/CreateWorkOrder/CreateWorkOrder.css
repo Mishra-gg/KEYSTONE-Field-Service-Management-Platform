@@ -1,0 +1,202 @@
+.create-workorder-layout {
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.create-workorder-main {
+  margin-left: 250px;
+  padding: 30px 35px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* HEADER */
+
+.create-workorder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.create-workorder-header h1 {
+  margin: 0;
+  color: #172033;
+  font-size: 30px;
+}
+
+.create-workorder-header p {
+  margin: 6px 0 0;
+  color: #667085;
+  font-size: 14px;
+}
+
+.back-button {
+  border: 1px solid #d0d5dd;
+  background: white;
+  color: #344054;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background: #f8fafc;
+}
+
+/* CARD */
+
+.create-workorder-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* SECTION */
+
+.form-section {
+  padding-bottom: 20px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #eaecf0;
+}
+
+.form-section h2 {
+  margin: 0;
+  color: #172033;
+  font-size: 18px;
+}
+
+.form-section p {
+  margin: 6px 0 0;
+  color: #667085;
+  font-size: 13px;
+}
+
+/* FORM GRID */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px 25px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-field label {
+  margin-bottom: 8px;
+  color: #344054;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  padding: 11px 13px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #344054;
+  background: white;
+  outline: none;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+/* ACTIONS */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid #eaecf0;
+}
+
+.cancel-button {
+  border: 1px solid #d0d5dd;
+  background: white;
+  color: #344054;
+  padding: 11px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background: #f8fafc;
+}
+
+.create-button {
+  border: none;
+  background: #2563eb;
+  color: white;
+  padding: 11px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.create-button:hover {
+  background: #1d4ed8;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+
+  .create-workorder-main {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .create-workorder-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-field.full-width {
+    grid-column: auto;
+  }
+
+  .create-workorder-card {
+    padding: 20px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .cancel-button,
+  .create-button {
+    width: 100%;
+  }
+}

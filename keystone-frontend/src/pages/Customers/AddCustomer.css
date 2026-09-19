@@ -1,0 +1,117 @@
+.add-customer-layout {
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.add-customer-main {
+  margin-left: 250px;
+  padding: 30px 35px;
+}
+
+.add-customer-back {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.add-customer-card {
+  background: white;
+  max-width: 800px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.add-customer-title h1 {
+  margin: 0;
+  color: #172033;
+  font-size: 26px;
+}
+
+.add-customer-title p {
+  margin-top: 6px;
+  color: #667085;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  color: #344054;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group textarea {
+  border: 1px solid #d0d5dd;
+  border-radius: 7px;
+  padding: 11px 12px;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #2563eb;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.cancel-customer-btn,
+.save-customer-btn {
+  border-radius: 7px;
+  padding: 11px 18px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cancel-customer-btn {
+  border: 1px solid #d0d5dd;
+  background: white;
+  color: #344054;
+}
+
+.save-customer-btn {
+  border: none;
+  background: #2563eb;
+  color: white;
+}
+
+.save-customer-btn:hover {
+  background: #1d4ed8;
+}
+
+@media (max-width: 700px) {
+  .add-customer-main {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

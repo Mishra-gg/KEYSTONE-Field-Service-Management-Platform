@@ -1,0 +1,188 @@
+.workorders-layout {
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.workorders-main {
+  margin-left: 250px;
+  padding: 30px 35px;
+}
+
+/* HEADER */
+
+.workorders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.workorders-header h1 {
+  margin: 0;
+  font-size: 30px;
+  color: #172033;
+}
+
+.workorders-header p {
+  margin-top: 6px;
+  color: #667085;
+}
+
+.create-workorder-btn {
+  border: none;
+  background: #2563eb;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.create-workorder-btn:hover {
+  background: #1d4ed8;
+}
+
+/* FILTERS */
+
+.workorders-filters {
+  background: white;
+  padding: 18px;
+  border-radius: 10px;
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.search-input {
+  flex: 1;
+}
+
+.workorders-filters input,
+.workorders-filters select {
+  border: 1px solid #d0d5dd;
+  border-radius: 7px;
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+}
+
+.workorders-filters input:focus,
+.workorders-filters select:focus {
+  border-color: #2563eb;
+}
+
+/* TABLE */
+
+.workorders-table-card {
+  background: white;
+  border-radius: 10px;
+  overflow-x: auto;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  background: #f8fafc;
+  color: #667085;
+  font-size: 13px;
+  padding: 15px;
+}
+
+td {
+  padding: 17px 15px;
+  border-top: 1px solid #eaecf0;
+  color: #344054;
+  font-size: 14px;
+}
+
+/* STATUS */
+
+.status,
+.priority {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.status.assigned {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.status.progress {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.status.completed {
+  background: #ecfdf3;
+  color: #16a34a;
+}
+
+.status.new {
+  background: #f2f4f7;
+  color: #475467;
+}
+
+/* PRIORITY */
+
+.priority.low {
+  background: #f2f4f7;
+  color: #475467;
+}
+
+.priority.medium {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.priority.high {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.priority.critical {
+  background: #7f1d1d;
+  color: white;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+  .workorders-main {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .workorders-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .workorders-filters {
+    flex-direction: column;
+  }
+  .workorder-link {
+  border: none;
+  background: transparent;
+  color: #2563eb !important;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-size: 14px;
+}
+
+.workorder-link:hover {
+  text-decoration: underline;
+
+}
+}

@@ -1,0 +1,248 @@
+.technician-details-layout {
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.technician-details-main {
+  margin-left: 250px;
+  padding: 30px 35px;
+}
+
+
+/* =========================
+   BACK BUTTON
+========================= */
+
+.back-button {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 25px;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.technician-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.technician-title-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.large-technician-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #eff6ff;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.technician-details-id {
+  color: #667085;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.technician-title-section h1 {
+  margin: 4px 0;
+  color: #172033;
+  font-size: 26px;
+}
+
+.technician-title-section p {
+  margin: 0;
+  color: #667085;
+  font-size: 14px;
+}
+
+
+/* =========================
+   EDIT BUTTON
+========================= */
+
+.edit-technician-btn {
+  border: none;
+  background: #2563eb;
+  color: white;
+  padding: 11px 17px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.edit-technician-btn:hover {
+  background: #1d4ed8;
+}
+
+
+/* =========================
+   DETAILS GRID
+========================= */
+
+.technician-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+
+/* =========================
+   INFO CARD
+========================= */
+
+.technician-info-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.technician-info-card h2,
+.technician-workorders-card h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #172033;
+  font-size: 18px;
+}
+
+
+/* =========================
+   DETAIL ROW
+========================= */
+
+.technician-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 14px 0;
+  border-bottom: 1px solid #eaecf0;
+}
+
+.technician-detail-row:last-child {
+  border-bottom: none;
+}
+
+.technician-detail-row > span:first-child {
+  color: #667085;
+  font-size: 14px;
+}
+
+.technician-detail-row strong {
+  color: #344054;
+  font-size: 14px;
+  text-align: right;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.technician-status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.technician-status.available {
+  background: #ecfdf3;
+  color: #16a34a;
+}
+
+.technician-status.busy {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.technician-status.off-duty {
+  background: #f2f4f7;
+  color: #667085;
+}
+
+
+/* =========================
+   WORK ORDERS
+========================= */
+
+.technician-workorders-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  margin-top: 20px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.technician-workorders-empty {
+  text-align: center;
+  padding: 35px;
+  color: #667085;
+}
+
+.technician-workorders-empty div {
+  font-size: 30px;
+}
+
+.technician-workorders-empty h3 {
+  color: #344054;
+  margin: 10px 0 5px;
+}
+
+.technician-workorders-empty p {
+  margin: 0;
+  font-size: 13px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+  .technician-details-main {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .technician-details-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .technician-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-technician-btn {
+    width: 100%;
+  }
+
+}

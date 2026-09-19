@@ -1,0 +1,113 @@
+.add-site-layout {
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.add-site-main {
+  margin-left: 250px;
+  padding: 30px 35px;
+}
+
+.back-button {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 25px;
+}
+
+.add-site-header h1 {
+  margin: 0;
+  font-size: 30px;
+  color: #172033;
+}
+
+.add-site-header p {
+  color: #667085;
+  margin-top: 6px;
+}
+
+.add-site-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  margin-top: 25px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  max-width: 900px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #344054;
+  margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 11px 12px;
+  border: 1px solid #d0d5dd;
+  border-radius: 7px;
+  font-size: 14px;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #2563eb;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.cancel-button,
+.save-site-button {
+  padding: 11px 18px;
+  border-radius: 7px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background: white;
+  border: 1px solid #d0d5dd;
+  color: #344054;
+}
+
+.save-site-button {
+  background: #2563eb;
+  border: none;
+  color: white;
+}
+
+.save-site-button:hover {
+  background: #1d4ed8;
+}
+
+@media (max-width: 700px) {
+  .add-site-main {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

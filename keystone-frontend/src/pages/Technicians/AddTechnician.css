@@ -1,0 +1,158 @@
+.add-technician-layout {
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.add-technician-main {
+  margin-left: 250px;
+  padding: 30px 35px;
+}
+
+
+/* =========================
+   BACK BUTTON
+========================= */
+
+.back-button {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 25px;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.add-technician-header h1 {
+  margin: 0;
+  color: #172033;
+  font-size: 30px;
+}
+
+.add-technician-header p {
+  color: #667085;
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+
+/* =========================
+   FORM CARD
+========================= */
+
+.add-technician-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  margin-top: 25px;
+  max-width: 850px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+
+/* =========================
+   FORM GROUP
+========================= */
+
+.add-technician-card .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.add-technician-card .form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #344054;
+  margin-bottom: 7px;
+}
+
+.add-technician-card .form-group input,
+.add-technician-card .form-group select {
+  padding: 11px 12px;
+  border: 1px solid #d0d5dd;
+  border-radius: 7px;
+  font-size: 14px;
+  outline: none;
+  background: white;
+}
+
+.add-technician-card .form-group input:focus,
+.add-technician-card .form-group select:focus {
+  border-color: #2563eb;
+}
+
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.cancel-technician-button,
+.save-technician-button {
+  padding: 11px 18px;
+  border-radius: 7px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cancel-technician-button {
+  background: white;
+  border: 1px solid #d0d5dd;
+  color: #344054;
+}
+
+.cancel-technician-button:hover {
+  background: #f8fafc;
+}
+
+.save-technician-button {
+  background: #2563eb;
+  border: none;
+  color: white;
+}
+
+.save-technician-button:hover {
+  background: #1d4ed8;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+  .add-technician-main {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .add-technician-card {
+    padding: 20px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .cancel-technician-button,
+  .save-technician-button {
+    width: 100%;
+  }
+
+}
